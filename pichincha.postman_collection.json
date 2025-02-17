@@ -1,0 +1,375 @@
+{
+	"info": {
+		"_postman_id": "3c99d1d0-4fa3-4000-aed8-d3f52d7c9b79",
+		"name": "pichincha",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3190279"
+	},
+	"item": [
+		{
+			"name": "gorest",
+			"item": [
+				{
+					"name": "create user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 142b1e45517b2dc9bec70a50b4a6a5bbf0d7c727c7bc1ab28e87429325c26162"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Ahron Sotomayor\",\r\n    \"gender\": \"male\",\r\n    \"email\": \"ahron@gmail.com\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gorest.co.in/public/v2/users",
+							"protocol": "https",
+							"host": [
+								"gorest",
+								"co",
+								"in"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by userId",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 142b1e45517b2dc9bec70a50b4a6a5bbf0d7c727c7bc1ab28e87429325c26162"
+							}
+						],
+						"url": {
+							"raw": "https://gorest.co.in/public/v2/users/7704456",
+							"protocol": "https",
+							"host": [
+								"gorest",
+								"co",
+								"in"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users",
+								"7704456"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "app-pinchincha-exchange",
+			"item": [
+				{
+					"name": "Get Exchange by id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/exchange/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"exchange",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get many Exchange by USERID",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/exchange/user?userId=7704456",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"exchange",
+								"user"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "7704456"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "guardar exchange",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 1,\r\n    \"sourceCurrency\": \"PEN\", // PEN or USD\r\n    \"targetCurrency\": \"USD\", // PEN or USD\r\n    \"amount\": 200,\r\n    \"exchangeRate\": 3.75\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/exchange",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"exchange"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar exchange",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 1,\r\n    \"sourceCurrency\": \"USD\", // PEN or USD\r\n    \"targetCurrency\": \"PEN\", // PEN or USD\r\n    \"amount\": 1,\r\n    \"exchangeRate\": 3.75\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/exchange/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"exchange",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "channel-pichincha-exchange",
+			"item": [
+				{
+					"name": "Get many Exchange by USERID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "142b1e45517b2dc9bec70a50b4a6a5bbf0d7c727c7bc1ab28e87429325c26162",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchange/user?userId=7704456",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchange",
+								"user"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "7704456"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Exchange by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "142b1e45517b2dc9bec70a50b4a6a5bbf0d7c727c7bc1ab28e87429325c26162",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/exchange/1?userId=7704456",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchange",
+								"1"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "7704456"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear exchange",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "142b1e45517b2dc9bec70a50b4a6a5bbf0d7c727c7bc1ab28e87429325c26162",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 7704456,\r\n    \"sourceCurrency\": \"PEN\", // PEN or USD\r\n    \"targetCurrency\": \"USD\", // PEN or USD\r\n    \"amount\": 50,\r\n    \"exchangeRate\": 3.75\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/exchange",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchange"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar exchange",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "142b1e45517b2dc9bec70a50b4a6a5bbf0d7c727c7bc1ab28e87429325c26162",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 7704456,\r\n    \"sourceCurrency\": \"PEN\", // PEN or USD\r\n    \"targetCurrency\": \"USD\", // PEN or USD\r\n    \"amount\": 10,\r\n    \"exchangeRate\": 6.75\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/exchange/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exchange",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

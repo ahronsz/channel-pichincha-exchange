@@ -1,0 +1,11 @@
+gorest:
+  service:
+    base-url: https://gorest.co.in
+spring:
+  application:
+    name: channel-pichincha-exchange
+api-support:
+  service:
+    base-url: http://localhost:8081
+server:
+  port: 8080

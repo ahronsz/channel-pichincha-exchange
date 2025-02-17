@@ -1,0 +1,220 @@
+openapi: 3.0.3
+info:
+  title: Exchange Service API
+  description: API para la gestión de transacciones de cambio de divisas, con autenticación basada en token de GoRest.
+  version: 1.0.0
+  contact:
+    name: Soporte API
+    email: soporte@pichincha.com
+    url: https://www.pichincha.com
+
+servers:
+  - url: https://api.pichincha.com/v1
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    ExchangeRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+          description: ID del usuario que solicita la transacción
+          example: 123
+        amount:
+          type: number
+          format: double
+          description: Monto a intercambiar
+          example: 100.00
+        sourceCurrency:
+          type: string
+          description: Moneda origen (por ejemplo, PEN)
+          example: PEN
+        targetCurrency:
+          type: string
+          description: Moneda destino (por ejemplo, USD)
+          example: USD
+        exchangeRate:
+          type: number
+          format: double
+          description: Tasa de cambio aplicada
+          example: 3.56
+      required:
+        - userId
+        - amount
+        - sourceCurrency
+        - targetCurrency
+        - exchangeRate
+
+    ExchangeResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID de la transacción de cambio
+          example: 456
+        userName:
+          type: string
+          description: Nombre del usuario que realizó la transacción
+          example: Juan Pérez
+        amount:
+          type: number
+          format: double
+          description: Monto original intercambiado
+          example: 100.00
+        sourceCurrency:
+          type: string
+          description: Moneda origen
+          example: PEN
+        targetCurrency:
+          type: string
+          description: Moneda destino
+          example: USD
+        convertedAmount:
+          type: number
+          format: double
+          description: Monto convertido a la moneda destino
+          example: 28.17
+        exchangeRate:
+          type: number
+          format: double
+          description: Tasa de cambio utilizada
+          example: 3.56
+        updatedAt:
+          type: string
+          format: date-time
+          description: Fecha y hora de la última actualización
+          example: "2025-02-17T12:34:56Z"
+        createdAt:
+          type: string
+          format: date-time
+          description: Fecha y hora en que se creó la transacción
+          example: "2025-02-17T10:00:00Z"
+
+security:
+  - BearerAuth: []
+
+paths:
+  /exchange:
+    post:
+      summary: Crear una nueva transacción de intercambio
+      description: Crea una nueva transacción de intercambio de divisas entre el usuario y las monedas especificadas.
+      operationId: createExchange
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExchangeRequest'
+      responses:
+        '201':
+          description: Transacción creada correctamente
+          content:
+            application/json: {}
+        '400':
+          description: Solicitud incorrecta (por ejemplo, parámetros inválidos)
+        '401':
+          description: Token de autenticación no válido o expirado
+        '500':
+          description: Error interno del servidor
+
+  /exchange/{id}:
+    get:
+        summary: Obtener una transacción de intercambio por ID
+        description: Obtiene los detalles de una transacción de intercambio específica mediante su ID.
+        operationId: findExchangeById
+        parameters:
+          - name: id
+            in: path
+            required: true
+            description: ID de la transacción de intercambio
+            schema:
+              type: integer
+              example: 456
+          - name: userId
+            in: query
+            required: true
+            description: ID del usuario que realizó la transacción
+            schema:
+              type: integer
+              example: 123
+        responses:
+          '200':
+            description: Transacción encontrada y mostrada correctamente
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ExchangeResponse'
+          '400':
+            description: Solicitud incorrecta
+          '401':
+            description: Token de autenticación no válido o expirado
+          '404':
+            description: Transacción no encontrada
+          '500':
+            description: Error interno del servidor
+    patch:
+      summary: Actualizar una transacción de intercambio existente
+      description: Actualiza los detalles de una transacción de intercambio de divisas previamente creada.
+      operationId: updateExchange
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de la transacción de intercambio
+          schema:
+            type: integer
+            example: 456
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExchangeRequest'
+      responses:
+        '200':
+          description: Transacción actualizada correctamente
+          content:
+            application/json: {}
+        '400':
+          description: Solicitud incorrecta (por ejemplo, parámetros inválidos)
+        '401':
+          description: Token de autenticación no válido o expirado
+        '404':
+          description: Transacción no encontrada
+        '500':
+          description: Error interno del servidor
+
+  /exchange/user:
+    get:
+      summary: Obtener todas las transacciones de intercambio de un usuario
+      description: Obtiene todas las transacciones de intercambio realizadas por un usuario específico.
+      operationId: listExchangeByUserId
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          description: ID del usuario cuyas transacciones se quieren listar
+          schema:
+            type: integer
+            example: 123
+      responses:
+        '200':
+          description: Lista de transacciones obtenidas correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExchangeResponse'
+        '400':
+          description: Solicitud incorrecta
+        '401':
+          description: Token de autenticación no válido o expirado
+        '500':
+          description: Error interno del servidor
